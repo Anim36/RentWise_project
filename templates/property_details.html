@@ -196,7 +196,13 @@
 </div>
 
 
-                   {% if not user.is_authenticated %}
+                   {% if user.is_authenticated %}
+            <div class="mt-5 w-full flex justify-center">
+              <a href="{% url 'contact-owner' property.id %}" class="w-full text-center bg-[#1D4ED8] text-white font-medium rounded-lg px-5 py-2 hover:shadow-lg duration-200">CONATCT TO OWNER</a>
+            </div>
+          {% endif %}
+
+          {% if not user.is_authenticated %}
             <div class="mt-5 w-full flex justify-center">
               <a href="{% url 'login' %}" class="w-full text-center bg-[#1D4ED8] text-white font-medium rounded-lg px-5 py-2 hover:shadow-lg duration-200">PLEASE LOG IN TO CONATCT OWNER</a>
             </div>
