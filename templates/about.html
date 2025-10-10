@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  About Us
+{% endblock %}
+
+{% block content %}
+<!-- Image Section -->
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <img src="{% static 'images/Ss.png' %}" alt="About Banner" class="rounded-lg shadow-md w-full" />
+  </div>
+  <!-- Banner Section -->
+  <div class="bg-gray-100 py-12 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-3">About Us</h1>
+    <p class="text-gray-600 max-w-2xl mx-auto">
+      Rent Wise is Bangladesh’s premier digital platform for house rentals.
+      Our mission is to make finding a home simple, fast, and reliable. This Platform gives a huge space to those tenants who want to get their desired and comfortable residence without any hassle.We try to provide authentic and appropriate properties to the people to stay and live happily.
+    </p>
+  </div>
+  <div class="bg-gray-100 py-12 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-3">Our Mission</h1>
+    <p class="text-gray-600 max-w-2xl mx-auto">
+      Our mission is simple: to make renting homes in Bangladesh easy, safe, and efficient. Whether you are a student looking for a hostel, a bachelor searching for a room, a family seeking a new apartment, or a business owner looking for office space, RENT WISE connects you with verified properties across Bangladesh quickly and conveniently.
+    </p>
+  </div>
+  <div class="bg-gray-100 py-12 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-3">Our Vision</h1>
+    <p class="text-gray-600 max-w-2xl mx-auto">
+      We envision a Bangladesh without broker dependency, where renting a home is a smooth, fully digital experience. Our goal is to ensure that every home seeker and landlord trusts RENT WISE as their first choice for rental properties.</p>
+  </div>
+
+
+
+  <!-- Team Section -->
+  <div class="bg-white py-12">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-800">Our Team</h2>
+      <p class="text-gray-500 mt-2"></p>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+      <!-- Member 1 -->
+      <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+        <img src="{% static 'images/sani2.jpeg' %}" alt="Sani" class="w-24 h-24 mx-auto rounded-full mb-4 object-cover">
+        <h3 class="text-xl font-semibold text-gray-800">Tousif Mahmood Sani</h3>
+        <p class="text-gray-500 text-sm mb-3">Frontend Developer</p>
+        <p class="text-gray-600 text-sm">Website designer</p>
+        <div class="flex justify-center space-x-4 mt-3">
+          <a target="_blank" href="https://www.facebook.com/share/1a7cMEpycQ/" class="text-gray-600 hover:text-black">
+            <i class="fab fa-facebook"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+        <img src="{% static 'images/Anim (2).jpg' %}" alt="Anim" class="w-24 h-24 mx-auto rounded-full mb-4 object-cover">
+        <h3 class="text-xl font-semibold text-gray-800">Taj Mohammad Anim</h3>
+        <p class="text-gray-500 text-sm mb-3">Web Developer</p>
+        <p class="text-gray-600 text-sm">Fullstack developer creating websites.</p>
+        <div class="flex justify-center space-x-4 mt-3">
+          <a target="_blank" href="https://www.facebook.com/md.anim.36" class="text-gray-600 hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+        <img src="{% static 'images/Minhaz.jpg' %}" alt="Minhaz" class="w-24 h-24 mx-auto rounded-full mb-4 object-cover">
+        <h3 class="text-xl font-semibold text-gray-800">Shah Abul Hasnat</h3>
+        <p class="text-gray-500 text-sm mb-3">Designer</p>
+        <p class="text-gray-600 text-sm">Website designer</p>
+        <div class="flex justify-center space-x-4 mt-3">
+          <a target="_blank" href="https://www.facebook.com/hasnatminhaz" class="text-gray-600 hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
