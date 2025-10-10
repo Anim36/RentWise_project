@@ -196,13 +196,7 @@
 </div>
 
 
-          {% if user.is_authenticated %}
-            <div class="mt-5 w-full flex justify-center">
-              <a href="{% url 'contact-owner' property.id %}" class="w-full text-center bg-[#1D4ED8] text-white font-medium rounded-lg px-5 py-2 hover:shadow-lg duration-200">CONATCT TO OWNER</a>
-            </div>
-          {% endif %}
-
-          {% if not user.is_authenticated %}
+                   {% if not user.is_authenticated %}
             <div class="mt-5 w-full flex justify-center">
               <a href="{% url 'login' %}" class="w-full text-center bg-[#1D4ED8] text-white font-medium rounded-lg px-5 py-2 hover:shadow-lg duration-200">PLEASE LOG IN TO CONATCT OWNER</a>
             </div>
@@ -210,15 +204,58 @@
         </div>
       </div>
 
-      {% comment %}bottom section{% endcomment %}
-      {% comment %} <div class="flex border-t">
-        <div class="w-full text-center py-3 border-r">
-          <i class="fa-solid fa-bed"></i><span>1</span>
-        </div>
-        <div class="w-full text-center py-3 border-r">bath</div>
-        <div class="w-full text-center py-3">kit</div>
-      </div> {% endcomment %}
+      <!-- ========== ADD REVIEWS SECTION RIGHT HERE ========== -->
+      <!-- Reviews Section -->
+      <div class="mt-10 border-t pt-8">
+          <h2 class="text-xl font-bold text-[#1D4ED8] mb-4">Reviews & Ratings</h2>
+
+          {% if avg_rating %}
+          <div class="flex items-center gap-2 mb-4">
+              <span class="text-2xl font-bold">{{ avg_rating }}/5</span>
+              <div class="flex">
+                  {% for i in "12345" %}
+                      <svg class="w-5 h-5 {% if forloop.counter <= avg_rating %}text-yellow-400{% else %}text-gray-300{% endif %}"
+                           aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.87l-5.05.383c-1.775.135-2.495 2.331-1.142 3.477l3.685 3.295-.984 5.06c-.413 2.115 1.85 3.754 3.696 2.657l4.148-2.399 4.148 2.399c1.846 1.097 4.109-.542 3.696-2.657l-.984-5.06 3.685-3.295c1.353-1.146.633-3.342-1.142-3.477l-5.05-.383-1.754-4.65Z"/>
+                      </svg>
+                  {% endfor %}
+              </div>
+              <span class="text-gray-600">({{ review_count }} review{{ review_count|pluralize }})</span>
+          </div>
+          {% endif %}
+
+          {% if user.is_authenticated and user != property.owner %}
+          <a href="{% url 'add_review' property.id %}" class="bg-[#1D4ED8] text-white px-4 py-2 rounded-lg inline-block mb-6">
+              Write a Review
+          </a>
+          {% endif %}
+
+          <div class="space-y-4">
+              {% for review in reviews %}
+              <div class="border rounded-lg p-4">
+                  <div class="flex justify-between items-start mb-2">
+                      <div>
+                          <h3 class="font-semibold">{{ review.user.username }}</h3>
+                          <div class="flex items-center gap-1 mt-1">
+                              {% for i in "12345" %}
+                                  <svg class="w-4 h-4 {% if forloop.counter <= review.rating %}text-yellow-400{% else %}text-gray-300{% endif %}"
+                                       aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                      <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.87l-5.05.383c-1.775.135-2.495 2.331-1.142 3.477l3.685 3.295-.984 5.06c-.413 2.115 1.85 3.754 3.696 2.657l4.148-2.399 4.148 2.399c1.846 1.097 4.109-.542 3.696-2.657l-.984-5.06 3.685-3.295c1.353-1.146.633-3.342-1.142-3.477l-5.05-.383-1.754-4.65Z"/>
+                                  </svg>
+                              {% endfor %}
+                          </div>
+                      </div>
+                      <span class="text-sm text-gray-500">{{ review.created_at|date:"M d, Y" }}</span>
+                  </div>
+                  <p class="text-gray-700">{{ review.comment }}</p>
+              </div>
+              {% empty %}
+              <p class="text-gray-500 text-center py-4">No reviews yet. Be the first to review this property!</p>
+              {% endfor %}
+          </div>
+      </div>
+      <!-- ========== END REVIEWS SECTION ========== -->
+
     </div>
   </div>
 {% endblock %}
-<!-- home page end -->

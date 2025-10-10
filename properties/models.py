@@ -69,15 +69,15 @@ class Property(models.Model):
         return self.category.category_name
 
 
-# property review management
-class Review(models.Model):
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    review = models.TextField()
-    rating = models.IntegerField()
-
-    def __str__(self):
-        return self.review
+# # property review management
+# class Review(models.Model):
+#     property = models.ForeignKey(Property, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     review = models.TextField()
+#     rating = models.IntegerField()
+#
+#     def __str__(self):
+#         return self.review
 
 
 # booking management

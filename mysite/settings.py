@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "credit",
     "userapp",
     "contactUsapp",
+    "reviews",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

@@ -68,15 +68,28 @@ def category(request, val):
 
 # property details
 def property_details(request, id):
-
     property = Property.objects.get(id=id)
     location = Location.objects.get(id=property.location.id)
 
-    print("property details = ", property)
-    print("location details = ", location)
+    # Get reviews for this property
+    from reviews.models import Review
+    reviews = Review.objects.filter(property=property, is_approved=True).order_by('-created_at')
+
+    # Calculate average rating
+    avg_rating = 0
+    if reviews:
+        avg_rating = sum([review.rating for review in reviews]) / len(reviews)
 
     return render(
-        request, "property_details.html", {"property": property, "location": location}
+        request,
+        "property_details.html",
+        {
+            "property": property,
+            "location": location,
+            "reviews": reviews,
+            "avg_rating": round(avg_rating, 1) if avg_rating else 0,
+            "review_count": len(reviews)
+        }
     )
 
 
