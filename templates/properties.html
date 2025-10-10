@@ -1,0 +1,110 @@
+<!-- home page start -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Properties
+{% endblock %}
+
+{% block content %}
+  {% for message in messages %}
+    <div id="toast-warning" class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 fixed bottom-12 left-5" role="alert">
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-700 dark:text-blue-200">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z" />
+        </svg>
+        <span class="sr-only">Warning icon</span>
+      </div>
+      <div class="ms-3 text-sm font-normal">{{ message }}</div>
+      <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-warning" aria-label="Close">
+        <span class="sr-only">Close</span>
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+      </button>
+    </div>
+  {% endfor %}
+
+  <!-- All Properties -->
+  <div class="lg:flex justify-between mt-5">
+    <h2 class="text-center lg:text-start pb-2 text-3xl font-bold border-b-2 border-b-[#2563EB]">List of All properties</h2>
+
+    <form action="/properties/?search={{ request.GET.search }}&sort_by={{ request.GET.sort_by }}&order={{ request.GET.order }}" method="GET" class="sm:flex justify-between items-center lg:justify-end gap-2 mt-5 lg:mt-0">
+      <!--<input type="subject" class="border border-gray-400 px-3 py-2 rounded outline-none focus:border focus:border-[#2563EB] w-full sm:w-auto" id="search" name="search" placeholder="Search Properties" />-->
+
+      <div class="flex sm:block justify-end gap-2 mt-2 sm:mt-0">
+        <select class="text-white bg-[#2563EB] hover:bg-[#1E40AF] focus:outline-none font-medium rounded text-sm px-2 py-2.5 text-center inline-flex items-center" name="order" id="order">
+          <option class="bg-white text-black" value="">Area</option>
+          <option class="bg-white text-black" value="asc">Barisal</option>
+          <option class="bg-white text-black" value="desc">Chittagong</option>
+          <option class="bg-white text-black" value="desc">Dhaka</option>
+          <option class="bg-white text-black" value="desc">Khulna</option>
+          <option class="bg-white text-black" value="desc">Mymensingh</option>
+          <option class="bg-white text-black" value="desc">Rajshahi</option>
+          <option class="bg-white text-black" value="desc">Rangpur</option>
+          <option class="bg-white text-black" value="desc">Sylhet</option>
+        </select>
+        <!-- Sort By -->
+        <select class="text-white bg-[#2563EB] hover:bg-[#1E40AF] focus:outline-none font-medium rounded text-sm px-2 py-2.5 text-center inline-flex items-center" name="sort_by" id="order">
+          <option class="bg-white text-black" value="">Category</option>
+          <option class="bg-white text-black" value="price">Family</option>
+          <option class="bg-white text-black" value="rooms">Bachelor</option>
+          <option class="bg-white text-black" value="washrooms">Sublet</option>
+          <option class="bg-white text-black" value="floor">Office</option>
+          <option class="bg-white text-black" value="kitchen">Hostel</option>
+        </select>
+
+        <!-- Sorting Order -->
+        <select class="text-white bg-[#2563EB] hover:bg-[#1E40AF] focus:outline-none font-medium rounded text-sm px-2 py-2.5 text-center inline-flex items-center" name="order" id="order">
+          <option class="bg-white text-black" value="">Select Order</option>
+          <option class="bg-white text-black" value="asc">High to Low</option>
+          <option class="bg-white text-black" value="desc">Low to High</option>
+        </select>
+
+        <!-- Submit -->
+        <button type="submit" class="text-white bg-[#2563EB] hover:bg-[#1E40AF] focus:outline-none font-medium rounded text-sm px-5 py-2.5 text-center inline-flex items-center">Search</button>
+      </div>
+    </form>
+  </div>
+
+  {% if propertyCount == 0 %}
+    <div class="flex items-center justify-center h-96">
+      <h2 class="text-3xl font-bold text-center">No Properties Found</h2>
+    </div>
+  {% endif %}
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 py-10">
+  {% for property in properties %}
+    <div class="relative rounded-xl shadow-xl overflow-hidden group">
+
+      {% if property.property_img %}
+        <img src="{{ property.property_img.url }}" class="h-56 w-full object-cover" alt="Property Image" />
+      {% else %}
+        <div class="h-56 w-full bg-gray-200 flex items-center justify-center">
+          <p class="text-gray-500">No property image available</p>
+        </div>
+      {% endif %}
+
+      <!-- Button Overlay -->
+      <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+        <a href="/properties/{{ property.id }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 shadow-lg">
+          View Details
+        </a>
+      </div>
+
+      <div class="p-5 bg-white">
+        <p class="font-bold text-lg pt-2">{{ property.title }}</p>
+        <h5 class="pb-2 text-sm">Category: <span class="font-bold">{{ property.category }}</span></h5>
+        <p class="text-sm text-gray-500">Bed: {{ property.rooms }}, Bath: {{ property.washrooms }}, Kitchen: {{ property.kitchen }}</p>
+        <p class="text-sm font-medium text-gray-800">{{ property.location }}</p>
+        <p class="text-lg pt-1 font-semibold text-[#2563EB]">{{ property.price }}/TK</p>
+
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}
+<!-- home page end -->

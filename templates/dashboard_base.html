@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        My Website
+      {% endblock %}
+    </title>
+    {% load static %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'CSS/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}" />
+    <script src="https://kit.fontawesome.com/982be6354a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Top Navbar -->
+    <nav class="fixed top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg text-white z-50">
+      <div class="container mx-auto px-5 flex flex-wrap items-center justify-between py-4">
+        <!-- Logo -->
+        <a href="/" class="flex items-center">
+          <img src="{% static '/images/qqqqqqqqqq.png' %}" class="h-10 mr-2" alt="Logo" />
+          <span class="text-xl sm:text-2xl font-semibold">Rent Wise</span>
+        </a>
+
+        <!-- Right Section -->
+        <div class="flex items-center space-x-3">
+          <!-- Search -->
+          <form action="/properties/?search={{ request.GET.search }}" method="GET" class="hidden lg:flex relative">
+            <input type="text" name="search" id="search" placeholder="Search Properties"
+                   class="px-3 py-2 rounded-l-md outline-none w-64 text-gray-700 focus:ring-2 focus:ring-blue-300"/>
+            <button type="submit"
+                    class="bg-white text-blue-600 rounded-r-md px-3 py-2 hover:bg-gray-100 transition">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+
+          <!-- Auth Buttons -->
+          {% if not request.user.is_authenticated %}
+          <a href="/login"
+             class="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md font-medium transition flex items-center space-x-2">
+            <i class="fas fa-user"></i><span>LOGIN/SIGNUP</span>
+          </a>
+          {% endif %}
+
+          {% if request.user.is_authenticated %}
+          <button type="button" class="bg-white text-blue-600 rounded-full p-1 focus:ring-2 focus:ring-blue-300" id="user-menu-button" data-dropdown-toggle="user-dropdown">
+            <img class="w-8 h-8 rounded-full" src="{% static '/images/profile.png' %}" alt="user photo" />
+          </button>
+          {% endif %}
+
+          <!-- Dropdown -->
+          <div class="hidden absolute right-0 mt-12 w-48 bg-white text-gray-700 rounded-md shadow-lg" id="user-dropdown">
+            <div class="px-4 py-3 border-b">
+              <span class="block text-sm font-semibold">
+                {% if request.user.is_authenticated %}{{ request.user.username }}{% else %}User{% endif %}
+              </span>
+              <span class="block text-xs text-gray-500">
+                {% if request.user.is_authenticated %}{{ request.user.email }}{% else %}N/A{% endif %}
+              </span>
+            </div>
+            <ul class="py-1">
+              <li><a href="/dashboard/profile" class="block px-4 py-2 hover:bg-gray-100">Profile</a></li>
+              <li><a href="/dashboard" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a></li>
+              <li><a href="{% url 'add-property' %}" class="block px-4 py-2 hover:bg-gray-100">Add Property</a></li>
+              <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-100">Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navbar Links -->
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="/" class="hover:text-gray-200 font-medium">Home</a>
+          <a href="{% url 'about' %}" class="hover:text-gray-200 font-medium">About</a>
+
+          <!-- Properties Dropdown -->
+          <div class="relative">
+            <button id="dropdownButton" class="flex items-center space-x-1 font-medium text-white hover:text-gray-200">
+              <span>Properties</span>
+              <i class="fas fa-chevron-down text-xs"></i>
+            </button>
+
+            <div id="dropdownMenu" class="hidden absolute bg-white text-gray-700 rounded-md shadow-lg mt-2 w-40">
+              <ul class="py-1">
+                <li><a href="/properties/category/Bachelor" class="block px-4 py-2 hover:bg-gray-100">Bachelor</a></li>
+                <li><a href="/properties/category/Family" class="block px-4 py-2 hover:bg-gray-100">Family</a></li>
+                <li><a href="/properties/category/Sublet" class="block px-4 py-2 hover:bg-gray-100">Sublet</a></li>
+                <li><a href="/properties/category/Office" class="block px-4 py-2 hover:bg-gray-100">Office</a></li>
+                <li><a href="/properties/category/Hostel" class="block px-4 py-2 hover:bg-gray-100">Hostel</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <a href="/contact" class="hover:text-gray-200 font-medium">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <script>
+      const button = document.getElementById('dropdownButton');
+      const menu = document.getElementById('dropdownMenu');
+
+      button.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', function(event) {
+        if (!button.contains(event.target) && !menu.contains(event.target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    </script>
+
+    <!-- Sidebar + Content -->
+    <main class="py-5 px-5 mt-20">
+      <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+          <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+      </button>
+
+      <aside id="logo-sidebar" class="fixed top-[75px] left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 border-r-2 shadow-lg">
+          <div class="mb-5">
+            <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+              <img src="{% static '/images/qqqqqqqqqq.png' %}" class="h-8" alt="Logo" />
+              <span class="self-center text-lg sm:text-2xl text-[#2563EB] font-semibold whitespace-nowrap">Rent Wise</span>
+            </a>
+          </div>
+
+          <ul class="space-y-2 font-medium">
+            <li>
+              <a href="/dashboard/profile" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#2563EB] hover:text-white group">
+  <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
+</a>
+
+            </li>
+            <li>
+              <a href="/dashboard" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#2563EB] hover:text-white group">
+  <span class="ms-3">Dashboard</span>
+</a>
+
+            </li>
+
+            <li>
+              <a href="/dashboard/my-properties" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#2563EB] hover:text-white group">
+  <span class="flex-1 ms-3 whitespace-nowrap">My Properties</span>
+  <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-white bg-[#2563EB] rounded-full">
+    {{ propertyCount }}
+  </span>
+</a>
+
+            </li>
+
+            <li>
+              <a href="/properties/property/add" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#2563EB] hover:text-white group">
+  <span class="flex-1 ms-3 whitespace-nowrap">Add Property</span>
+</a>
+
+            </li>
+
+            <li>
+              <a href="/dashboard/credits" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#2563EB] hover:text-white group">
+  <span class="flex-1 ms-3 whitespace-nowrap">Buy Credit</span>
+</a>
+
+            </li>
+
+            <li>
+              <a href="/logout" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#2563EB] hover:text-white group">
+  <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
+</a>
+
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="p-4 sm:ml-64">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+     <!-- 🦶 Footer -->
+     <footer class="bg-blue-950 text-white py-6 mt-10 text-center text-sm">
+     <p>© {{ now.year }} Rent_Wise — All Rights Reserved</p>
+     <p class="mt-1">
+     Developed by <a href="#" class="text-blue-400 hover:underline">Backbencher Team</a>
+     </p>
+     </footer>
+  </body>
+</html>

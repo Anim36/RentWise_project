@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Contact To Owner
+{% endblock %}
+
+{% block content %}
+  <div class="max-w-2xl mx-auto mt-10 bg-white shadow-md rounded-lg p-6">
+
+    <!-- Heading -->
+    <h1 class="text-2xl md:text-3xl font-bold text-center text-[#1D4ED8] mb-4">
+      Landlord Information
+    </h1>
+    <p class="text-center text-gray-600 mb-6">
+      Get in touch with the property owner using the information below.
+    </p>
+
+    <!-- Owner Info Card -->
+    <div class="flex items-center border rounded-lg p-4 hover:shadow-lg transition">
+      <img src="{% static 'images/man.jpg' %}" alt="Owner"
+           class="w-16 h-16 rounded-full border-2 border-[#1D4ED8] object-cover">
+      <div class="ml-4">
+        <h2 class="text-lg font-semibold text-gray-800">
+          {{ ownerInfo.first_name|default:'N/A' }} {{ ownerInfo.last_name|default:'' }}
+        </h2>
+        <p class="text-gray-600">
+          📧 Email:
+          <a href="mailto:{{ owner.email }}" class="text-[#1D4ED8] font-medium">
+            {{ owner.email|default:'N/A' }}
+          </a>
+        </p>
+        <p class="text-gray-600">
+          📞 Phone:
+          <a href="tel:{{ ownerInfo.phone }}" class="text-[#1D4ED8] font-medium">
+            {{ ownerInfo.phone|default:'N/A' }}
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Support Info -->
+    <div class="mt-6 text-center text-sm text-gray-600">
+      <p>If you face issues, contact our support team:</p>
+      <p>
+        <a href="mailto:support@gmail.com" class="text-[#1D4ED8] font-semibold">
+          support@gmail.com
+        </a> |
+        <a href="tel:+1234567890" class="text-[#1D4ED8] font-semibold">
+          +1234567890
+        </a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
