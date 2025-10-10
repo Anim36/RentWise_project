@@ -1,0 +1,224 @@
+/* 🌐 Global Font & Base */
+* {
+  font-family: "DM Sans", sans-serif !important;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🧩 Tailwind Base */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* 🏠 Home Page Layout */
+body {
+  background-color: #f9fafb;
+  color: #1f2937;
+  scroll-behavior: smooth;
+}
+
+/* 🌅 Hero Section */
+.hero {
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* 🔘 Hero Button */
+.hero .btn {
+  margin-top: 20px;
+  background-color: white;
+  color: #2563eb;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.hero .btn:hover {
+  background-color: #1e40af;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+/* 💎 Feature Cards */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 25px;
+  padding: 60px 40px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+}
+
+.card i {
+  font-size: 2.2rem;
+  color: #2563eb;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* 🎞️ Swiper Section */
+.swiper {
+  width: 90%;
+  margin: 50px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.swiper-slide {
+  background: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover {
+  transform: scale(1.03);
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ⏩ Swiper Controls */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #2563eb !important;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #2563eb;
+  color: white !important;
+}
+
+/* ⚪ Swiper Dots */
+.swiper-pagination-bullet {
+  background-color: #cbd5e1;
+  opacity: 1;
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #2563eb !important;
+}
+
+/* 📞 Contact Section */
+.contact {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.contact h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1f2937;
+}
+
+.contact p {
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.contact .btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.contact .btn:hover {
+  background-color: #1e40af;
+}
+
+/* 🦶 Footer */
+footer {
+  background-color: #1e293b;
+  color: #f8fafc;
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #93c5fd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #ffffff;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .features {
+    padding: 40px 20px;
+  }
+
+  .swiper {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
